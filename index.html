@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      form {
+        width: 300px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div>
+        <label for="id">ID:</label>
+        <input type="number" id="id" name="id" />
+      </div>
+      <div>
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" />
+      </div>
+      <div>
+        <label for="address">Endereço:</label>
+        <input type="text" id="address" name="address" />
+      </div>
+      <button type="button" id="enviar">Enviar Dados</button>
+    </form>
+    <script>
+      document.getElementById("enviar").addEventListener("click", getData);
+      function getData() {
+        alert("ENTROU AQUI");
+
+        const id = document.getElementById("id").value;
+        const name = document.getElementById("name").value;
+        const address = document.getElementById("address").value;
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+            name: name,
+            address: address,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      }
+      document.getElementById("name").value;
+    </script>
+  </body>
+</html>
