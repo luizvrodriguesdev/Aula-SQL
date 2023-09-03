@@ -37,26 +37,29 @@ app.get("/users", async (req, res) => {
   res.status(200).json({ message: "Entrei no meu GET!", users: allUsers.rows });
 });
 
-// app.delete("/users/:id", async (req, res) => {
-//   const id = req.params.id;
-//   try {
-//     await client.query("DELETE FROM users WHERE id = $1", [id]);
-//     res.status(204).send();
-//   } catch (error) {
-//     res.status(500).send();
-//   }
-// });
+app.delete("/users/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await client.query("DELETE FROM users WHERE id = $1", [id]);
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send();
+  }
+});
 
-// app.patch("/users/:id", async (req, res) => {
-//   const { name, address } = req.body;
-//   const id = req.params.id;
-//   try {
-//     await client.query("PATCH FROM users WHERE id = $1", [id]);
-//     res.status(200).send();
-//   } catch (error) {
-//     res.status(204).send();
-//   }
-// });
+app.patch("/users/:id", async (req, res) => {
+  const { id, name, address } = req.body;
+  const updateById = req.params.id;
+  try {
+    await client.query(
+      "UPDATE users SET id = $1, name = $2, address = $3 WHERE id = $4",
+      [id, name, address, updateById]
+    );
+    res.status(200).send();
+  } catch (error) {
+    res.status(500).send();
+  }
+});
 
 app.listen(5000, () => {
   console.log("Servidor Rodando");
